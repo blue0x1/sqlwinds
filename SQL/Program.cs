@@ -1,4 +1,20 @@
-﻿using Microsoft.Win32.SafeHandles;
+/*
+ * SQLWinds - SQL Server Security Assessment & Post-Exploitation Toolkit
+ * Developed by Chokri Hammedi (blue0x1)
+ * 
+ * NOTICE:
+ * This tool is intended for authorized security testing and educational purposes ONLY.
+ * Unauthorized access to computer systems is illegal and prohibited.
+ * 
+ * The author assumes no liability for any misuse of this software.
+ * Users are solely responsible for ensuring they have proper authorization before
+ * using this tool on any system or network.
+ * 
+ * By using this software, you agree to use it only for lawful purposes and to comply
+ * with all applicable laws and regulations in your jurisdiction.
+ */
+
+using Microsoft.Win32.SafeHandles;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -5122,4 +5138,5 @@ END CATCH;
         }
         #endregion
     }
+
 }
