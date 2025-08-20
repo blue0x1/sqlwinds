@@ -1,0 +1,17 @@
+C:\Users\katana\source\repos\SQL\SQL\bin\Debug\SQL.exe.config
+C:\Users\katana\source\repos\SQL\SQL\bin\Debug\SQL.exe
+C:\Users\katana\source\repos\SQL\SQL\bin\Debug\SQL.pdb
+C:\Users\katana\source\repos\SQL\SQL\bin\Debug\Newtonsoft.Json.dll
+C:\Users\katana\source\repos\SQL\SQL\bin\Debug\System.IO.FileSystem.AccessControl.dll
+C:\Users\katana\source\repos\SQL\SQL\bin\Debug\System.Security.AccessControl.dll
+C:\Users\katana\source\repos\SQL\SQL\bin\Debug\System.Security.Principal.Windows.dll
+C:\Users\katana\source\repos\SQL\SQL\bin\Debug\Newtonsoft.Json.xml
+C:\Users\katana\source\repos\SQL\SQL\bin\Debug\System.IO.FileSystem.AccessControl.xml
+C:\Users\katana\source\repos\SQL\SQL\bin\Debug\System.Security.AccessControl.xml
+C:\Users\katana\source\repos\SQL\SQL\bin\Debug\System.Security.Principal.Windows.xml
+C:\Users\katana\source\repos\SQL\SQL\obj\Debug\SQL.csproj.AssemblyReference.cache
+C:\Users\katana\source\repos\SQL\SQL\obj\Debug\SQL.csproj.CoreCompileInputs.cache
+C:\Users\katana\source\repos\SQL\SQL\obj\Debug\SQL.csproj.Up2Date
+C:\Users\katana\source\repos\SQL\SQL\obj\Debug\SQL.exe
+C:\Users\katana\source\repos\SQL\SQL\obj\Debug\SQL.pdb
+C:\Users\katana\source\repos\SQL\SQL\obj\Debug\SQL.exe.config

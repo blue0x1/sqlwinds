@@ -1,0 +1,16 @@
+C:\Users\katana\source\repos\SQL\SQL\bin\Release\SQLWinds.exe.config
+C:\Users\katana\source\repos\SQL\SQL\bin\Release\SQLWinds.exe
+C:\Users\katana\source\repos\SQL\SQL\bin\Release\SQLWinds.pdb
+C:\Users\katana\source\repos\SQL\SQL\bin\Release\Newtonsoft.Json.dll
+C:\Users\katana\source\repos\SQL\SQL\bin\Release\System.IO.FileSystem.AccessControl.dll
+C:\Users\katana\source\repos\SQL\SQL\bin\Release\System.Security.AccessControl.dll
+C:\Users\katana\source\repos\SQL\SQL\bin\Release\System.Security.Principal.Windows.dll
+C:\Users\katana\source\repos\SQL\SQL\bin\Release\Newtonsoft.Json.xml
+C:\Users\katana\source\repos\SQL\SQL\bin\Release\System.IO.FileSystem.AccessControl.xml
+C:\Users\katana\source\repos\SQL\SQL\bin\Release\System.Security.AccessControl.xml
+C:\Users\katana\source\repos\SQL\SQL\bin\Release\System.Security.Principal.Windows.xml
+C:\Users\katana\source\repos\SQL\SQL\obj\Release\SQLWinds.csproj.AssemblyReference.cache
+C:\Users\katana\source\repos\SQL\SQL\obj\Release\SQLWinds.csproj.CoreCompileInputs.cache
+C:\Users\katana\source\repos\SQL\SQL\obj\Release\SQLWinds.csproj.Up2Date
+C:\Users\katana\source\repos\SQL\SQL\obj\Release\SQLWinds.exe
+C:\Users\katana\source\repos\SQL\SQL\obj\Release\SQLWinds.pdb
