@@ -2,7 +2,7 @@
 
 **SQL Security Assessment & Post-Exploitation Toolkit**
 
-SQLWinds is a command-line tool for security testing and exploiting Microsoft SQL Server. It provides an interactive environment to deeply analyze servers, escalate privileges, execute attacks, and pivot through networks—all with specialized commands for tasks like in-memory code execution and SCCM database exploration.
+SQLWinds is a command-line tool for security testing and exploiting Microsoft SQL Server. It provides an interactive environment to deeply analyze servers, escalate privileges, execute attacks, and pivot through networks all with specialized commands for tasks like in-memory code execution and SCCM database exploration.
 
 <br>
 
