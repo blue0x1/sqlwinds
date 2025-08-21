@@ -7,9 +7,21 @@ SQLWinds is a command-line tool for security testing and exploiting Microsoft SQ
 <br>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b3f0fd0e-617c-4ef3-98c2-ce7abe0f2482" alt="SQLWinds" />
+  <img src="https://github.com/user-attachments/assets/b3f0fd0e-617c-4ef3-98c2-ce7abe0f2482" alt="SQLWinds" width="450" height="450" />
 </p>
 
+---
+
+## 📖 Documentation & Resources
+
+[![Wiki](https://img.shields.io/badge/Documentation-Wiki-blue)](https://github.com/blue0x1/sqlwinds/wiki)
+[![Issues](https://img.shields.io/badge/Support-Issues-red)](https://github.com/blue0x1/sqlwinds/issues)
+[![Releases](https://img.shields.io/badge/Download-Releases-green)](https://github.com/blue0x1/sqlwinds/releases)
+
+**Quick Links:**
+- **[Full Documentation & Wiki](https://github.com/blue0x1/sqlwinds/wiki)** - Complete usage guide and command reference
+- **[Report an Issue](https://github.com/blue0x1/sqlwinds/issues)** - Found a bug or have a feature request?
+- **[Latest Release](https://github.com/blue0x1/sqlwinds/releases)** - Download the newest version
 
 ---
 
@@ -231,13 +243,19 @@ sqlwinds> :download "SELECT file_data FROM documents WHERE id=1" secret.docx
 
 ---
 
-## Disclaimer
+## 🤝 Contributing & Support
+
+We welcome contributions! If you have ideas for improvements or find any issues:
+
+1. Check the [Wiki](https://github.com/blue0x1/sqlwinds/wiki) for documentation
+2. Search existing [Issues](https://github.com/blue0x1/sqlwinds/issues) to avoid duplicates
+3. Create a new issue with detailed information about your suggestion or bug report
+
+## ⚠️ Disclaimer
 
 This tool is intended for **authorized security testing and educational purposes only**. Unauthorized use against systems you do not own or have explicit permission to test is illegal. The developers assume no liability and are not responsible for any misuse or damage caused by this program.
 
 ---
-
-
 
 ## Credits
 
