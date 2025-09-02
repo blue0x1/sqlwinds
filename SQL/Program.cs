@@ -51,12 +51,12 @@ namespace SQLWinds
             task.Wait();
             Environment.ExitCode = task.Result;
         }
+
         static async Task<int> MainAsync(string[] args)
         {
             var cfg = CLI.Parse(args);
             if (cfg.ShowHelp) { CLI.PrintHelp(); return 0; }
 
-            
             if (cfg.GetInstance)
             {
                 EnumerateDomainInstances();
@@ -64,12 +64,55 @@ namespace SQLWinds
             }
 
             
+            if (cfg.CmdCommand != null)
+            {
+                if (string.IsNullOrEmpty(cfg.Server))
+                {
+                    Console.Error.WriteLine("[-] Missing --server argument for command execution.");
+                    CLI.PrintHelp();
+                    return 1;
+                }
+
+                var cmdConnStr = BuildConnectionString(cfg);  
+                try
+                {
+                    using (var conn = new SqlConnection(cmdConnStr))  
+                    {
+                        IDisposable impersonation = null;
+                        try
+                        {
+                            if (cfg.UseKerberos && cfg.HasCredentialPair)
+                            {
+                                impersonation = Impersonate.IfNeeded(cfg);
+                                Console.WriteLine("[*] Impersonation active for provided credentials.");
+                            }
+                            await conn.OpenAsync();
+                            Console.WriteLine($"[+] Connected to {cfg.Server} (DB={conn.Database}).");
+
+                             
+                            await ExecXpCmdShell(conn, cfg.CmdCommand);
+                        }
+                        finally
+                        {
+                            impersonation?.Dispose();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine("[-] Fatal: " + ex.Message);
+                    return 2;
+                }
+                return 0;
+            }
+
             if (string.IsNullOrEmpty(cfg.Server))
             {
                 Console.Error.WriteLine("[-] Missing --server argument.");
                 CLI.PrintHelp();
                 return 1;
             }
+
             if (cfg.SpnCheck)
             {
                 Console.WriteLine("[*] Performing SPN check for target...");
@@ -84,7 +127,8 @@ namespace SQLWinds
                 }
                 if (cfg.SpnOnly) return 0;
             }
-            var connStr = BuildConnectionString(cfg);
+
+            var connStr = BuildConnectionString(cfg);  
             try
             {
                 using (var conn = new SqlConnection(connStr))
@@ -99,7 +143,7 @@ namespace SQLWinds
                         }
                         await conn.OpenAsync();
                         Console.WriteLine($"[+] Connected to {cfg.Server} (DB={conn.Database}).");
-                         
+
                         try
                         {
                             using (var verifyCmd = new SqlCommand("SELECT auth_scheme FROM sys.dm_exec_connections WHERE session_id = @@SPID", conn))
@@ -108,8 +152,8 @@ namespace SQLWinds
                                 Console.WriteLine($"[i] Server reports authentication scheme: {scheme ?? "unknown"}");
                             }
                         }
-                        catch {   }
-                       
+                        catch { }
+
                         if (cfg.UseRunas)
                         {
                             if (string.IsNullOrEmpty(cfg.RunasUser) || string.IsNullOrEmpty(cfg.RunasPassword))
@@ -119,7 +163,6 @@ namespace SQLWinds
                                 return 1;
                             }
 
-                            
                             string server = cfg.Server;
                             bool isLocalhost = IsLocalhostConnection(server);
 
@@ -127,11 +170,9 @@ namespace SQLWinds
                             {
                                 Console.WriteLine($"[*] Launching as user '{cfg.RunasUser}' for localhost connection");
                                 LaunchProcessAsUser(cfg);
-                                return 0;  
+                                return 0;
                             }
                         }
-
-                       
 
                         if (cfg.EnableOle)
                         {
@@ -143,7 +184,7 @@ namespace SQLWinds
                             await RunOleCommand(conn, cfg.OleCommand);
                             return 0;
                         }
-                         
+
                         if (cfg.EnableXpCmdShell)
                         {
                             await TryEnableXpCmdShell(conn);
@@ -154,7 +195,7 @@ namespace SQLWinds
                             await TryDisableXpCmdShell(conn);
                             return 0;
                         }
-                        
+
                         if (cfg.EnableClr)
                         {
                             await EnableClr(conn);
@@ -170,7 +211,7 @@ namespace SQLWinds
                             await DeployClrAssembly(conn, cfg.ClrAssemblyPath);
                             return 0;
                         }
-                       
+
                         if (cfg.ShowInfo)
                         {
                             if (string.IsNullOrEmpty(cfg.Server))
@@ -179,17 +220,15 @@ namespace SQLWinds
                                 return 1;
                             }
 
-                            
                             try
                             {
-                                var infoConnStr = BuildConnectionString(cfg);  
-                                using (var infoConn = new SqlConnection(infoConnStr))   
+                                var infoConnStr = BuildConnectionString(cfg);
+                                using (var infoConn = new SqlConnection(infoConnStr))
                                 {
-                                    
                                     var openTask = infoConn.OpenAsync();
                                     if (await Task.WhenAny(openTask, Task.Delay(5000)) == openTask)
                                     {
-                                        await openTask;  
+                                        await openTask;
                                     }
                                     else
                                     {
@@ -207,13 +246,13 @@ namespace SQLWinds
                                     return 0;
                                 }
                             }
-                            catch (SqlException sqlEx) when (sqlEx.Number == 18456)   
+                            catch (SqlException sqlEx) when (sqlEx.Number == 18456)
                             {
                                 Console.WriteLine("[*] Authentication failed, showing public instance info");
                                 ShowBasicInstanceInfo(cfg.Server);
                                 return 0;
                             }
-                            catch (Exception ex)   
+                            catch (Exception ex)
                             {
                                 Console.WriteLine($"[*] Connection error ({ex.Message}), showing public instance info");
                                 ShowBasicInstanceInfo(cfg.Server);
@@ -228,7 +267,7 @@ namespace SQLWinds
                             if (!string.IsNullOrEmpty(cfg.ExportJson)) File.WriteAllText(cfg.ExportJson, JsonConvert.SerializeObject(tbl, Newtonsoft.Json.Formatting.Indented));
                             return 0;
                         }
-                        
+
 
                         if (cfg.RunFile != null)
                         {
@@ -297,7 +336,7 @@ namespace SQLWinds
                             return 0;
                         }
 
-                         await REPL(conn, cfg);
+                        await REPL(conn, cfg);
                     }
                     finally
                     {
@@ -312,6 +351,7 @@ namespace SQLWinds
             }
             return 0;
         }
+
         #region ConnectionString & Builder
         static string BuildConnectionString(Config cfg)
         {
@@ -4887,6 +4927,7 @@ END CATCH;
             public int Timeout = 15;
             public string RunFile;
             public string RunCommand;
+            public string CmdCommand = null;
             public bool ShowHelp = false;
             public bool SccmInventory = false;
             public bool SccmCollections = false;
@@ -4975,6 +5016,8 @@ END CATCH;
                         case "--ole-cmd": c.OleCommand = Next(args, ref i, a); break;
                         case "--disable-ole": c.DisableOle = true; break;
                         case "--enable-xp-cmdshell": c.EnableXpCmdShell = true; break;
+                        case "--cmd": c.CmdCommand = Next(args, ref i, a); break;
+
                         case "--disable-xp-cmdshell": c.DisableXpCmdShell = true; break;
                         case "--enable-clr": c.EnableClr = true; break;
                         case "--disable-clr": c.DisableClr = true; break;
@@ -5101,6 +5144,7 @@ END CATCH;
                 Console.WriteLine("  --ole-cmd \"<command>\"       Execute OS command using OLE Automation");
                 Console.WriteLine("  --disable-ole                Disable OLE Automation Procedures");
                 Console.WriteLine("  --enable-xp-cmdshell         Enable xp_cmdshell (requires sysadmin)");
+                Console.WriteLine("  --cmd \"<command>\"           Execute OS command via xp_cmdshell and exit");
                 Console.WriteLine("  --disable-xp-cmdshell        Disable xp_cmdshell");
                 Console.WriteLine("  --enable-clr                 Enable CLR integration (requires sysadmin)");
                 Console.WriteLine("  --disable-clr                Disable CLR integration");
@@ -5138,5 +5182,4 @@ END CATCH;
         }
         #endregion
     }
-
 }
